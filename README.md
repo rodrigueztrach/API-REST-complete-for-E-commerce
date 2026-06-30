@@ -4,7 +4,7 @@ API REST completa para e-commerce con **Spring Boot 3**, **Spring Security + JWT
 
 ---
 
-## 🚀 Inicio Rápido
+##  Inicio Rápido
 
 ```bash
 # Clonar / abrir el proyecto
@@ -16,18 +16,8 @@ cd ecommerce-api
 
 El servidor inicia en `http://localhost:8080`
 
----
 
-## 📋 Usuarios de Prueba (precargados)
-
-| Rol      | Email                  | Contraseña |
-|----------|------------------------|------------|
-| 👑 Admin  | admin@ecommerce.com    | admin123   |
-| 👤 Cliente | juan@email.com        | user123    |
-
----
-
-## 🔗 URLs Importantes
+##  URLs Importantes
 
 | Servicio        | URL                                        |
 |-----------------|--------------------------------------------|
@@ -42,15 +32,15 @@ El servidor inicia en `http://localhost:8080`
 
 ---
 
-## 📚 Endpoints de la API
+##  Endpoints de la API
 
-### 🔐 Autenticación (`/api/auth`)
+###  Autenticación (`/api/auth`)
 | Método | Endpoint             | Descripción         | Auth |
 |--------|----------------------|---------------------|------|
 | POST   | `/api/auth/register` | Registrar usuario   |    |
 | POST   | `/api/auth/login`    | Iniciar sesión      |    |
 
-### 📦 Productos (`/api/products`)
+###  Productos (`/api/products`)
 | Método | Endpoint                          | Descripción                  | Auth    |
 |--------|-----------------------------------|------------------------------|---------|
 | GET    | `/api/products`                   | Listar todos (paginado)      |       |
@@ -75,11 +65,11 @@ El servidor inicia en `http://localhost:8080`
 ###  Carrito (`/api/cart`)
 | Método | Endpoint                   | Descripción             | Auth      |
 |--------|----------------------------|-------------------------|-----------|
-| GET    | `/api/cart`                | Ver mi carrito          | 🔑 JWT    |
-| POST   | `/api/cart/items`          | Agregar producto        | 🔑 JWT    |
-| PUT    | `/api/cart/items/{itemId}` | Cambiar cantidad        | 🔑 JWT    |
-| DELETE | `/api/cart/items/{itemId}` | Eliminar item           | 🔑 JWT    |
-| DELETE | `/api/cart`                | Vaciar carrito          | 🔑 JWT    |
+| GET    | `/api/cart`                | Ver mi carrito          |  JWT    |
+| POST   | `/api/cart/items`          | Agregar producto        |  JWT    |
+| PUT    | `/api/cart/items/{itemId}` | Cambiar cantidad        |  JWT    |
+| DELETE | `/api/cart/items/{itemId}` | Eliminar item           |  JWT    |
+| DELETE | `/api/cart`                | Vaciar carrito          |  JWT    |
 
 ###  Usuarios (`/api/users`)
 | Método | Endpoint              | Descripción              | Auth      |
@@ -202,7 +192,7 @@ src/main/java/com/ecommerce/
 
 ---
 
-## 🔒 Seguridad
+##  Seguridad
 
 - **JWT (JSON Web Tokens)** para autenticación stateless
 - **BCrypt** para hash de contraseñas
