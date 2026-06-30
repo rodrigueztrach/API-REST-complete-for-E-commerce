@@ -1,7 +1,6 @@
 package com.ecommerce.service.impl;
 
 import com.ecommerce.dto.AuthDto;
-import com.ecommerce.dto.UserDto;
 import com.ecommerce.entity.Cart;
 import com.ecommerce.entity.User;
 import com.ecommerce.exception.BadRequestException;
@@ -13,6 +12,7 @@ import com.ecommerce.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -51,39 +51,41 @@ public class AuthServiceImpl implements AuthService {
 
         User savedUser = userRepository.save(user);
 
-        // Create cart for new user
         Cart cart = Cart.builder().user(savedUser).build();
         cartRepository.save(cart);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(savedUser.getEmail());
         String token = jwtUtil.generateToken(userDetails);
 
-        log.info("New user registered: {}", savedUser.getEmail());
+        log.info("New user registered: {}", maskEmail(savedUser.getEmail()));
 
-        return AuthDto.AuthResponse.builder()
-                .token(token)
-                .type("Bearer")
-                .userId(savedUser.getId())
-                .email(savedUser.getEmail())
-                .fullName(savedUser.getFirstName() + " " + savedUser.getLastName())
-                .role(savedUser.getRole())
-                .build();
+        return buildAuthResponse(savedUser, token);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public AuthDto.AuthResponse login(AuthDto.LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            );
+        } catch (BadCredentialsException ex) {
+            // Message generic: no show if email or password is incorrect to avoid giving hints to attackers
+            throw new BadRequestException("Credenciales inválidas");
+        }
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new BadRequestException("Usuario no encontrado"));
+                .orElseThrow(() -> new BadRequestException("Credenciales inválidas"));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         String token = jwtUtil.generateToken(userDetails);
 
-        log.info("User logged in: {}", user.getEmail());
+        log.info("User logged in: {}", maskEmail(user.getEmail()));
 
+        return buildAuthResponse(user, token);
+    }
+
+    private AuthDto.AuthResponse buildAuthResponse(User user, String token) {
         return AuthDto.AuthResponse.builder()
                 .token(token)
                 .type("Bearer")
@@ -92,5 +94,11 @@ public class AuthServiceImpl implements AuthService {
                 .fullName(user.getFirstName() + " " + user.getLastName())
                 .role(user.getRole())
                 .build();
+    }
+
+    private String maskEmail(String email) {
+        int at = email.indexOf('@');
+        if (at <= 1) return "***" + email.substring(at);
+        return email.charAt(0) + "***" + email.substring(at);
     }
 }
