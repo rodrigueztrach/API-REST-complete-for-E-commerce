@@ -25,12 +25,6 @@ El servidor inicia en `http://localhost:8080`
 | API Docs (JSON) | http://localhost:8080/api-docs             |
 | H2 Console      | http://localhost:8080/h2-console           |
 
-**H2 Console config:**
-- JDBC URL: `jdbc:h2:mem:ecommercedb`
-- Usuario: `sa`  
-- Contraseña: `password`
-
----
 
 ##  Endpoints de la API
 
