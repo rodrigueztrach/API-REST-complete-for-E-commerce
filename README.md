@@ -1,4 +1,4 @@
-# 🛒 E-Commerce REST API — Spring Boot
+#  E-Commerce REST API — Spring Boot
 
 API REST completa para e-commerce con **Spring Boot 3**, **Spring Security + JWT**, **JPA/Hibernate** y documentación **Swagger/OpenAPI**.
 
