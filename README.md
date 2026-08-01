@@ -1,85 +1,85 @@
-#  E-Commerce REST API — Spring Boot
+# E-Commerce REST API — Spring Boot
 
-API REST completa para e-commerce con **Spring Boot 3**, **Spring Security + JWT**, **JPA/Hibernate** y documentación **Swagger/OpenAPI**.
+Complete REST API for e-commerce built with **Spring Boot 3**, **Spring Security + JWT**, **JPA/Hibernate**, and **Swagger/OpenAPI** documentation.
 
 ---
 
-##  Inicio Rápido
+## Quick Start
 
 ```bash
-# Clonar / abrir el proyecto
+# Clone / open the project
 cd ecommerce-api
 
-# Compilar y ejecutar
+# Build and run
 ./mvnw spring-boot:run
 ```
 
-El servidor inicia en `http://localhost:8080`
+The server starts at `http://localhost:8080`
 
 
-##  URLs Importantes
+## Important URLs
 
-| Servicio        | URL                                        |
-|-----------------|--------------------------------------------|
-| Swagger UI      | http://localhost:8080/swagger-ui.html      |
-| API Docs (JSON) | http://localhost:8080/api-docs             |
-| H2 Console      | http://localhost:8080/h2-console           |
+| Service         | URL                                        |
+|------------------|--------------------------------------------|
+| Swagger UI       | http://localhost:8080/swagger-ui.html      |
+| API Docs (JSON)  | http://localhost:8080/api-docs             |
+| H2 Console       | http://localhost:8080/h2-console           |
 
 
-##  Endpoints de la API
+## API Endpoints
 
-###  Autenticación (`/api/auth`)
-| Método | Endpoint             | Descripción         | Auth |
-|--------|----------------------|---------------------|------|
-| POST   | `/api/auth/register` | Registrar usuario   |    |
-| POST   | `/api/auth/login`    | Iniciar sesión      |    |
+### Authentication (`/api/auth`)
+| Method | Endpoint             | Description         | Auth |
+|--------|-----------------------|---------------------|------|
+| POST   | `/api/auth/register` | Register user       |  No  |
+| POST   | `/api/auth/login`    | Log in              |  No  |
 
-###  Productos (`/api/products`)
-| Método | Endpoint                          | Descripción                  | Auth    |
-|--------|-----------------------------------|------------------------------|---------|
-| GET    | `/api/products`                   | Listar todos (paginado)      |       |
-| GET    | `/api/products/{id}`              | Obtener por ID               |       |
-| GET    | `/api/products/search?keyword=`   | Buscar por nombre/descripción|      |
-| GET    | `/api/products/category/{id}`     | Filtrar por categoría        |      |
-| GET    | `/api/products/price-range`       | Filtrar por precio           |       |
-| POST   | `/api/products`                   | Crear producto               |  Admin|
-| PUT    | `/api/products/{id}`              | Actualizar producto          |  Admin|
-| DELETE | `/api/products/{id}`              | Eliminar producto (soft)     |  Admin|
-| PATCH  | `/api/products/{id}/stock`        | Ajustar stock                |  Admin|
+### Products (`/api/products`)
+| Method | Endpoint                          | Description                    | Auth    |
+|--------|-----------------------------------|---------------------------------|---------|
+| GET    | `/api/products`                   | List all (paginated)           |  No     |
+| GET    | `/api/products/{id}`              | Get by ID                      |  No     |
+| GET    | `/api/products/search?keyword=`   | Search by name/description      |  No     |
+| GET    | `/api/products/category/{id}`     | Filter by category             |  No     |
+| GET    | `/api/products/price-range`       | Filter by price                |  No     |
+| POST   | `/api/products`                   | Create product                 |  Admin  |
+| PUT    | `/api/products/{id}`              | Update product                 |  Admin  |
+| DELETE | `/api/products/{id}`              | Delete product (soft delete)   |  Admin  |
+| PATCH  | `/api/products/{id}/stock`        | Adjust stock                   |  Admin  |
 
-### Categorías (`/api/categories`)
-| Método | Endpoint                  | Descripción          | Auth    |
-|--------|---------------------------|----------------------|---------|
-| GET    | `/api/categories`         | Listar categorías    |       |
-| GET    | `/api/categories/{id}`    | Obtener por ID       |       |
-| POST   | `/api/categories`         | Crear categoría      |  Admin|
-| PUT    | `/api/categories/{id}`    | Actualizar categoría |  Admin|
-| DELETE | `/api/categories/{id}`    | Eliminar categoría   |  Admin|
+### Categories (`/api/categories`)
+| Method | Endpoint                  | Description           | Auth    |
+|--------|---------------------------|-----------------------|---------|
+| GET    | `/api/categories`         | List categories       |  No     |
+| GET    | `/api/categories/{id}`    | Get by ID              |  No     |
+| POST   | `/api/categories`         | Create category        |  Admin  |
+| PUT    | `/api/categories/{id}`    | Update category        |  Admin  |
+| DELETE | `/api/categories/{id}`    | Delete category        |  Admin  |
 
-###  Carrito (`/api/cart`)
-| Método | Endpoint                   | Descripción             | Auth      |
-|--------|----------------------------|-------------------------|-----------|
-| GET    | `/api/cart`                | Ver mi carrito          |  JWT    |
-| POST   | `/api/cart/items`          | Agregar producto        |  JWT    |
-| PUT    | `/api/cart/items/{itemId}` | Cambiar cantidad        |  JWT    |
-| DELETE | `/api/cart/items/{itemId}` | Eliminar item           |  JWT    |
-| DELETE | `/api/cart`                | Vaciar carrito          |  JWT    |
+### Cart (`/api/cart`)
+| Method | Endpoint                   | Description               | Auth |
+|--------|-----------------------------|---------------------------|------|
+| GET    | `/api/cart`                | View my cart               | JWT  |
+| POST   | `/api/cart/items`          | Add product                | JWT  |
+| PUT    | `/api/cart/items/{itemId}` | Change quantity             | JWT  |
+| DELETE | `/api/cart/items/{itemId}` | Remove item                | JWT  |
+| DELETE | `/api/cart`                | Empty cart                  | JWT  |
 
-###  Usuarios (`/api/users`)
-| Método | Endpoint              | Descripción              | Auth      |
-|--------|-----------------------|--------------------------|-----------|
-| GET    | `/api/users/me`       | Ver mi perfil            |  JWT    |
-| PUT    | `/api/users/me`       | Actualizar perfil        |  JWT    |
-| PATCH  | `/api/users/me/password` | Cambiar contraseña    |  JWT    |
-| GET    | `/api/users`          | Listar todos usuarios    |  Admin  |
-| GET    | `/api/users/{id}`     | Ver usuario por ID       |  Admin  |
-| DELETE | `/api/users/{id}`     | Desactivar usuario       |  Admin  |
+### Users (`/api/users`)
+| Method | Endpoint                 | Description              | Auth  |
+|--------|---------------------------|--------------------------|-------|
+| GET    | `/api/users/me`          | View my profile           | JWT   |
+| PUT    | `/api/users/me`          | Update profile             | JWT   |
+| PATCH  | `/api/users/me/password` | Change password            | JWT   |
+| GET    | `/api/users`             | List all users             | Admin |
+| GET    | `/api/users/{id}`        | View user by ID            | Admin |
+| DELETE | `/api/users/{id}`        | Deactivate user             | Admin |
 
 ---
 
-## 📝 Ejemplos de Uso (cURL)
+## 📝 Usage Examples (cURL)
 
-### 1. Registrar usuario
+### 1. Register a user
 ```bash
 curl -X POST http://localhost:8080/api/auth/register \
   -H "Content-Type: application/json" \
@@ -93,7 +93,7 @@ curl -X POST http://localhost:8080/api/auth/register \
   }'
 ```
 
-### 2. Iniciar sesión y obtener token
+### 2. Log in and get a token
 ```bash
 curl -X POST http://localhost:8080/api/auth/login \
   -H "Content-Type: application/json" \
@@ -103,12 +103,12 @@ curl -X POST http://localhost:8080/api/auth/login \
   }'
 ```
 
-### 3. Buscar productos
+### 3. Search products
 ```bash
 curl "http://localhost:8080/api/products/search?keyword=samsung&page=0&size=5"
 ```
 
-### 4. Agregar al carrito (con token JWT)
+### 4. Add to cart (with JWT token)
 ```bash
 curl -X POST http://localhost:8080/api/cart/items \
   -H "Authorization: Bearer {TOKEN}" \
@@ -116,20 +116,20 @@ curl -X POST http://localhost:8080/api/cart/items \
   -d '{ "productId": 1, "quantity": 2 }'
 ```
 
-### 5. Ver el carrito
+### 5. View the cart
 ```bash
 curl http://localhost:8080/api/cart \
   -H "Authorization: Bearer {TOKEN}"
 ```
 
-### 6. Crear producto (Admin)
+### 6. Create a product (Admin)
 ```bash
 curl -X POST http://localhost:8080/api/products \
   -H "Authorization: Bearer {ADMIN_TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Nuevo Producto",
-    "description": "Descripción del producto",
+    "name": "New Product",
+    "description": "Product description",
     "price": 49.99,
     "stock": 100,
     "sku": "PROD-001",
@@ -139,41 +139,41 @@ curl -X POST http://localhost:8080/api/products \
 
 ---
 
-##  Arquitectura del Proyecto
+## Project Architecture
 
 ```
 src/main/java/com/ecommerce/
 ├── config/
-│   ├── DataInitializer.java      # Datos de prueba precargados
-│   ├── OpenApiConfig.java        # Configuración Swagger
+│   ├── DataInitializer.java      # Preloaded test data
+│   ├── OpenApiConfig.java        # Swagger configuration
 │   └── SecurityConfig.java       # Spring Security + JWT
 ├── controller/
 │   ├── AuthController.java       # POST /register, /login
-│   ├── ProductController.java    # CRUD productos + búsqueda
-│   ├── CategoryController.java   # CRUD categorías
-│   ├── CartController.java       # Gestión del carrito
-│   └── UserController.java       # Perfil de usuario
+│   ├── ProductController.java    # Product CRUD + search
+│   ├── CategoryController.java   # Category CRUD
+│   ├── CartController.java       # Cart management
+│   └── UserController.java       # User profile
 ├── dto/
-│   ├── ApiResponse.java          # Wrapper genérico de respuesta
-│   ├── AuthDto.java              # DTOs de autenticación
-│   ├── CartDto.java              # DTOs del carrito
-│   ├── CategoryDto.java          # DTOs de categorías
-│   ├── ProductDto.java           # DTOs de productos
-│   └── UserDto.java              # DTOs de usuarios
+│   ├── ApiResponse.java          # Generic response wrapper
+│   ├── AuthDto.java              # Authentication DTOs
+│   ├── CartDto.java              # Cart DTOs
+│   ├── CategoryDto.java          # Category DTOs
+│   ├── ProductDto.java           # Product DTOs
+│   └── UserDto.java              # User DTOs
 ├── entity/
-│   ├── User.java                 # Entidad usuario (roles CUSTOMER/ADMIN)
-│   ├── Product.java              # Entidad producto
-│   ├── Category.java             # Entidad categoría
-│   ├── Cart.java                 # Carrito (1:1 con User)
-│   └── CartItem.java             # Items del carrito
+│   ├── User.java                 # User entity (CUSTOMER/ADMIN roles)
+│   ├── Product.java              # Product entity
+│   ├── Category.java             # Category entity
+│   ├── Cart.java                 # Cart (1:1 with User)
+│   └── CartItem.java             # Cart items
 ├── exception/
-│   ├── GlobalExceptionHandler.java # Manejo centralizado de errores
+│   ├── GlobalExceptionHandler.java # Centralized error handling
 │   ├── ResourceNotFoundException.java
 │   ├── BadRequestException.java
 │   └── ConflictException.java
 ├── repository/                   # Spring Data JPA Repositories
 ├── security/
-│   ├── JwtUtil.java              # Generación/validación JWT
+│   ├── JwtUtil.java              # JWT generation/validation
 │   ├── JwtAuthenticationFilter.java
 │   └── CustomUserDetailsService.java
 └── service/
@@ -186,45 +186,45 @@ src/main/java/com/ecommerce/
 
 ---
 
-##  Seguridad
+## Security
 
-- **JWT (JSON Web Tokens)** para autenticación stateless
-- **BCrypt** para hash de contraseñas
-- Roles: `CUSTOMER` y `ADMIN`
-- Endpoints públicos: catálogo de productos, categorías, auth
-- Endpoints protegidos: carrito, perfil de usuario
-- Endpoints de admin: CRUD de productos/categorías, gestión de usuarios
+- **JWT (JSON Web Tokens)** for stateless authentication
+- **BCrypt** for password hashing
+- Roles: `CUSTOMER` and `ADMIN`
+- Public endpoints: product catalog, categories, auth
+- Protected endpoints: cart, user profile
+- Admin endpoints: product/category CRUD, user management
 
 ---
 
-## 🛠️ Tecnologías
+## 🛠️ Technologies
 
-| Tecnología | Versión | Uso |
+| Technology | Version | Purpose |
 |---|---|---|
-| Java | 17 | Lenguaje |
-| Spring Boot | 3.2.0 | Framework principal |
-| Spring Security | 6.x | Autenticación/Autorización |
-| Spring Data JPA | 3.x | Persistencia de datos |
-| H2 Database | - | BD en memoria (desarrollo) |
-| JWT (jjwt) | 0.11.5 | Tokens de seguridad |
-| Lombok | - | Reducción de boilerplate |
-| SpringDoc OpenAPI | 2.3.0 | Documentación Swagger |
+| Java | 17 | Language |
+| Spring Boot | 3.2.0 | Main framework |
+| Spring Security | 6.x | Authentication/Authorization |
+| Spring Data JPA | 3.x | Data persistence |
+| H2 Database | - | In-memory DB (development) |
+| JWT (jjwt) | 0.11.5 | Security tokens |
+| Lombok | - | Boilerplate reduction |
+| SpringDoc OpenAPI | 2.3.0 | Swagger documentation |
 
 ---
 
-## ⚙️ Configuración para Producción
+## ⚙️ Production Configuration
 
-Para producción, reemplazar H2 por PostgreSQL/MySQL en `application.properties`:
+For production, replace H2 with PostgreSQL/MySQL in `application.properties`:
 
 ```properties
 # PostgreSQL
 spring.datasource.url=jdbc:postgresql://localhost:5432/ecommercedb
 spring.datasource.username=postgres
-spring.datasource.password=tu_password
+spring.datasource.password=your_password
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.hibernate.ddl-auto=validate
 
-# JWT (usar variable de entorno)
+# JWT (use environment variable)
 jwt.secret=${JWT_SECRET}
 jwt.expiration=86400000
 ```
